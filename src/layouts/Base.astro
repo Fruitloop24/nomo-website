@@ -1,0 +1,84 @@
+---
+import '../styles/global.css'
+import { SEO } from 'astro-seo'
+import { CONFIG } from '../config'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import MobileNav from '../components/MobileNav.astro'
+import SchemaLocalBusiness from '../components/SchemaLocalBusiness.astro'
+import { pwaInfo } from 'virtual:pwa-info'
+
+interface Props {
+  title?: string
+  description?: string
+  canonical?: string
+  image?: string
+}
+
+const { title, description, canonical, image } = Astro.props
+const pageTitle = title ? `${title} | ${CONFIG.appName}` : `${CONFIG.appName} — ${CONFIG.tagline}`
+const pageDesc = description ?? CONFIG.hero.subheadline
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).toString()
+const ogImage = image ?? new URL('/logo.jpg', Astro.site).toString()
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#04060a" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/logo.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap"
+    />
+
+    <SEO
+      title={pageTitle}
+      description={pageDesc}
+      canonical={canonicalUrl}
+      openGraph={{
+        basic: {
+          title: pageTitle,
+          type: 'website',
+          image: ogImage,
+          url: canonicalUrl,
+        },
+        optional: {
+          description: pageDesc,
+          siteName: CONFIG.appName,
+          locale: 'en_US',
+        },
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        title: pageTitle,
+        description: pageDesc,
+        image: ogImage,
+      }}
+      extend={{
+        meta: [
+          { name: 'author', content: CONFIG.appName },
+          { name: 'geo.region', content: `US-${CONFIG.address.state}` },
+          { name: 'geo.placename', content: CONFIG.address.city },
+        ],
+      }}
+    />
+
+    <SchemaLocalBusiness />
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+    <script src="/src/pwa.ts"></script>
+  </head>
+  <body class="bg-stone-900 text-warm-100 antialiased min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-1 pt-[108px] md:pt-[124px] pb-20 md:pb-0">
+      <slot />
+    </main>
+    <Footer />
+    <MobileNav />
+  </body>
+</html>

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow any preview deployments from being indexed
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://allthingsflooringntile.com/sitemap-index.xml

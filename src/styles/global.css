@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: 'Oswald', 'Bebas Neue', 'Impact', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* "warm" repurposed as off-white/cream surfaces over a near-black base. */
+  --color-warm-50: #ffffff;
+  --color-warm-100: #f5f6f8;
+  --color-warm-200: #e2e5ea;
+  --color-warm-300: #c4c9d2;
+  --color-warm-400: #8a91a0;
+  --color-warm-500: #5a6373;
+  --color-warm-600: #3d4452;
+  --color-warm-700: #262b35;
+  --color-warm-800: #14171f;
+  --color-warm-900: #07090d;
+
+  /* "stone" = matte black/charcoal — the NoMo Junk background tone */
+  --color-stone-50: #f6f7f9;
+  --color-stone-100: #e7eaef;
+  --color-stone-200: #c5cad3;
+  --color-stone-300: #8d95a3;
+  --color-stone-400: #5d6573;
+  --color-stone-500: #383f4b;
+  --color-stone-600: #232831;
+  --color-stone-700: #161a21;
+  --color-stone-800: #0c0f14;
+  --color-stone-900: #04060a;
+
+  /* Electric blue accent — straight off the logo */
+  --color-accent-light: #5b95ff;
+  --color-accent: #1e6fff;
+  --color-accent-dark: #1454d4;
+
+  --color-bg: #04060a;
+  --color-surface: #0c0f14;
+  --color-surface-2: #161a21;
+  --color-border: #232831;
+  --color-text: #f5f6f8;
+  --color-text-dim: #8d95a3;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-stone-900);
+  color: var(--color-warm-100);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   ELECTRIC ACCENTS — echo the logo: black base, white-outline glow,
+   electric-blue light. Tweak the glow strength here, it changes everywhere.
+   ──────────────────────────────────────────────────────────────────────── */
+
+/* Card: crisp white top-edge + depth; lights up electric blue on hover. */
+.card-electric {
+  border: 1px solid var(--color-stone-600);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 24px -10px rgba(0, 0, 0, 0.85);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card-electric:hover {
+  border-color: var(--color-accent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 0 1px rgba(30, 111, 255, 0.55),
+    0 0 30px -4px rgba(30, 111, 255, 0.55),
+    0 10px 28px -10px rgba(0, 0, 0, 0.85);
+  transform: translateY(-4px);
+}
+
+/* Persistent electric ring — for featured / "most popular" elements. */
+.ring-electric {
+  border: 2px solid var(--color-accent);
+  box-shadow:
+    0 0 0 4px rgba(30, 111, 255, 0.14),
+    0 0 38px -6px rgba(30, 111, 255, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* Outlined-text glow — white like "NoMo", blue like "JUNK". */
+.text-glow-white {
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.5), 0 0 22px rgba(255, 255, 255, 0.18);
+}
+.text-glow-accent {
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.45), 0 0 24px rgba(30, 111, 255, 0.6);
+}
+
+/* Glowing hairline rule — like the logo's bracket lines. */
+.rule-electric {
+  height: 2px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  box-shadow: 0 0 12px rgba(30, 111, 255, 0.6);
+}

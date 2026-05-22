@@ -1,0 +1,208 @@
+---
+import Base from '../layouts/Base.astro'
+import FAQ from '../components/FAQ.astro'
+import Testimonials from '../components/Testimonials.astro'
+import BeforeAfterCarousel from '../components/BeforeAfterCarousel.astro'
+import { CONFIG } from '../config'
+
+const workCategories = CONFIG.images.workCategories
+const rental = CONFIG.rental
+---
+
+<Base>
+  <!-- ════════════ 1. HERO — logo + slogan, uncovered ════════════ -->
+  <section class="bg-black text-warm-100 pt-8 pb-16 md:pt-12 md:pb-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <img
+        src={CONFIG.images.logo}
+        alt={CONFIG.appName}
+        class="block mx-auto w-full max-w-md md:max-w-lg lg:max-w-xl h-auto"
+        loading="eager"
+      />
+
+      <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mt-6 mb-4 text-glow-white">
+        Less Mess. <span class="text-accent text-glow-accent">Less Stress.</span>
+      </h1>
+
+      <p class="text-warm-300 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6">
+        {CONFIG.hero.subheadline}
+      </p>
+
+      <!-- Social-proof badge -->
+      <a
+        href={CONFIG.reviews.href}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2.5 bg-stone-900 border border-accent/60 hover:border-accent rounded-full pl-3 pr-4 py-2 mb-8 no-underline transition-colors group shadow-[0_0_22px_-6px_rgba(30,111,255,0.6)]"
+      >
+        <span class="flex items-center gap-0.5" aria-label={`${CONFIG.reviews.rating} out of 5 stars`}>
+          {
+            Array.from({ length: 5 }).map(() => (
+              <svg class="w-4 h-4 text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.42 4.36a1 1 0 00.95.69h4.59c.97 0 1.37 1.24.59 1.81l-3.72 2.7a1 1 0 00-.36 1.12l1.42 4.36c.3.92-.76 1.69-1.54 1.12l-3.71-2.7a1 1 0 00-1.18 0l-3.71 2.7c-.78.57-1.84-.2-1.54-1.12l1.42-4.36a1 1 0 00-.36-1.12l-3.72-2.7c-.78-.57-.38-1.81.59-1.81h4.59a1 1 0 00.95-.69l1.42-4.36z" />
+              </svg>
+            ))
+          }
+        </span>
+        <span class="text-warm-100 text-sm font-semibold">
+          {CONFIG.reviews.countLabel} Five-Star Reviews on {CONFIG.reviews.platform}
+        </span>
+      </a>
+
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+        <a
+          href="/estimate"
+          class="inline-flex items-center justify-center bg-accent hover:bg-accent-dark text-white px-10 py-5 text-base font-bold tracking-[0.15em] uppercase no-underline shadow-lg shadow-accent/40 transition-colors"
+        >
+          Get an Estimate →
+        </a>
+        <a
+          href={CONFIG.phone.href}
+          class="inline-flex items-center justify-center border-2 border-warm-100 text-warm-100 hover:bg-warm-100 hover:text-black px-10 py-5 text-base font-bold tracking-[0.15em] uppercase no-underline transition-colors"
+        >
+          Call {CONFIG.phone.display}
+        </a>
+      </div>
+
+      <!-- Above-the-fold dumpster CTA -->
+      <div class="mt-5 flex justify-center">
+        <a
+          href="/rent"
+          class="group inline-flex items-center justify-center gap-2.5 bg-white hover:bg-warm-100 text-black px-10 py-5 text-base font-bold tracking-[0.15em] uppercase no-underline ring-2 ring-accent shadow-[0_0_34px_-2px_rgba(30,111,255,0.75)] transition-colors"
+        >
+          <svg class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3 8.25h18l-1.5 9a1.5 1.5 0 01-1.48 1.25H5.98A1.5 1.5 0 014.5 17.25l-1.5-9zM2.4 5.25 4.5 5.7l.4 2.05M19.5 5.7l-2.1.45M8.4 12h7.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Rent a Dumpster Now →
+        </a>
+      </div>
+
+      <p class="text-warm-400 text-xs mt-4 uppercase tracking-widest">Free estimates · Same-week service</p>
+    </div>
+  </section>
+
+  <!-- ════════════ 2. WHAT WE DO — photo tiles ════════════ -->
+  <section class="py-20 md:py-28 bg-stone-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-14">
+        <p class="text-accent text-xs tracking-[0.3em] uppercase font-bold mb-4">What We Do</p>
+        <h2 class="font-heading text-3xl md:text-5xl font-bold text-warm-100 leading-tight mb-6">
+          {CONFIG.services.headline}
+        </h2>
+        <p class="text-warm-300 text-base md:text-lg leading-relaxed">
+          {CONFIG.services.subheadline}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
+        {
+          workCategories.map((c) => (
+            <a href="/estimate" class="group relative overflow-hidden aspect-[4/5] rounded-2xl ring-2 ring-white/15 hover:ring-accent no-underline shadow-xl shadow-black/40 transition-all">
+              <img
+                src={c.img}
+                alt={c.label}
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div class="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/95 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6">
+                <h3 class="font-heading text-2xl font-bold text-white uppercase tracking-wide mb-1 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">{c.label}</h3>
+                <p class="text-white/90 text-sm drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">{c.sub}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 3. ESTIMATOR CTA ════════════ -->
+  <section class="relative py-16 md:py-24 bg-black border-y-2 border-accent overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-accent/25 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="relative max-w-4xl mx-auto px-4 text-center">
+      <p class="text-accent-light text-xs tracking-[0.3em] uppercase font-bold mb-4">Not Sure What It'll Cost?</p>
+      <h2 class="font-heading text-3xl md:text-5xl font-bold text-warm-100 mb-5 leading-tight">
+        Get a Ballpark in 30 Seconds
+      </h2>
+      <p class="text-warm-300 mb-8 max-w-2xl mx-auto">
+        Pick what you've got, how much there is, and we'll show you a range. For a firm price we come walk the job — but this'll get you in the neighborhood.
+      </p>
+      <a href="/estimate" class="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-8 py-4 text-sm font-bold tracking-[0.15em] uppercase no-underline shadow-lg shadow-accent/30 transition-colors">
+        Run the Estimator →
+      </a>
+    </div>
+  </section>
+
+  <!-- ════════════ 4. DUMPSTER RENTAL ════════════ -->
+  <section class="py-20 md:py-28 bg-accent">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <p class="text-white/80 text-xs tracking-[0.3em] uppercase font-bold mb-4">Roll-Off Dumpster Rentals</p>
+        <h2 class="font-heading text-3xl md:text-5xl font-bold text-white leading-tight mb-5">
+          Need a Dumpster on the Driveway?
+        </h2>
+        <p class="text-white/85 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+          One size that does it all — drop-off, pickup, and your first ton included. Pick a date, reserve online, keep it as long as you need.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+        <img
+          src={CONFIG.images.dumpster}
+          alt="NoMo Junk roll-off dumpster trailer"
+          width="1600" height="1400"
+          class="w-full h-64 md:h-96 object-cover rounded-2xl ring-2 ring-black/20 shadow-2xl shadow-black/50"
+          loading="lazy"
+        />
+
+        <div class="bg-black rounded-2xl ring-1 ring-white/15 shadow-2xl shadow-black/50 p-8">
+          <p class="text-accent-light text-xs tracking-[0.25em] uppercase font-bold mb-2">{rental.name}</p>
+          <p class="text-warm-300 text-sm mb-4">{rental.capacity} · {rental.dims}</p>
+          <div class="flex items-baseline gap-2 mb-1">
+            <span class="font-heading text-5xl font-bold text-white">{`$${rental.basePrice}`}</span>
+            <span class="text-warm-400">to start</span>
+          </div>
+          <p class="text-warm-300 text-sm mb-6">{rental.includedDays} days + first ton, delivery &amp; pickup included · {`+$${rental.perExtraDay}`}/extra day</p>
+          <ul class="space-y-2 mb-7">
+            {rental.bestFor.map((b) => (
+              <li class="flex items-start gap-2 text-warm-200 text-sm">
+                <svg class="w-4 h-4 text-accent-light mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0l-3.5-3.5a1 1 0 011.4-1.4l2.8 2.79 6.8-6.79a1 1 0 011.4 0z" clip-rule="evenodd" />
+                </svg>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+          <a href="/rent" class="inline-flex w-full items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white px-8 py-4 text-sm font-bold tracking-[0.15em] uppercase no-underline shadow-lg shadow-accent/40 transition-colors">
+            Reserve a Dumpster →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ 5. BEFORE / AFTER (auto-rotating carousel) ════════════ -->
+  <BeforeAfterCarousel />
+
+  <!-- ════════════ 6. TESTIMONIALS / SOCIAL PROOF ════════════ -->
+  <Testimonials />
+
+  <!-- ════════════ 7. FAQ ════════════ -->
+  <FAQ />
+
+  <!-- ════════════ 7. FINAL CTA ════════════ -->
+  <section class="py-16 md:py-20 bg-accent text-white text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="font-heading text-3xl md:text-5xl font-bold mb-5">Ready to Haul It Off?</h2>
+      <p class="text-white/90 mb-8 text-base md:text-lg">Call now or book online — most jobs scheduled same week.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={CONFIG.phone.href} class="inline-flex items-center justify-center gap-2 bg-black hover:bg-stone-800 text-white px-8 py-4 text-sm font-bold tracking-[0.15em] uppercase no-underline transition-colors">
+          Call {CONFIG.phone.display}
+        </a>
+        <a href={CONFIG.booking} class="inline-flex items-center justify-center gap-2 bg-white hover:bg-warm-100 text-black px-8 py-4 text-sm font-bold tracking-[0.15em] uppercase no-underline transition-colors">
+          Book Online →
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

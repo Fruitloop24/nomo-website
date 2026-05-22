@@ -1,0 +1,82 @@
+---
+import { CONFIG } from '../config'
+
+const { reviews, testimonials } = CONFIG
+const stars = Array.from({ length: 5 })
+---
+
+<section class="py-20 md:py-28 bg-accent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <p class="text-white/80 text-xs tracking-[0.3em] uppercase font-bold mb-4">What Our Neighbors Say</p>
+
+      <div class="flex items-center justify-center gap-1 mb-4" aria-label={`${reviews.rating} out of 5 stars`}>
+        {
+          stars.map(() => (
+            <svg class="w-7 h-7 md:w-8 md:h-8 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.3)]" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.42 4.36a1 1 0 00.95.69h4.59c.97 0 1.37 1.24.59 1.81l-3.72 2.7a1 1 0 00-.36 1.12l1.42 4.36c.3.92-.76 1.69-1.54 1.12l-3.71-2.7a1 1 0 00-1.18 0l-3.71 2.7c-.78.57-1.84-.2-1.54-1.12l1.42-4.36a1 1 0 00-.36-1.12l-3.72-2.7c-.78-.57-.38-1.81.59-1.81h4.59a1 1 0 00.95-.69l1.42-4.36z" />
+            </svg>
+          ))
+        }
+      </div>
+
+      <h2 class="font-heading text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
+        {reviews.countLabel} Five-Star Reviews
+      </h2>
+      <p class="text-white/85 text-base md:text-lg leading-relaxed">
+        Real recommendations from real Middle Georgia neighbors.
+        <a href={reviews.href} target="_blank" rel="noopener" class="text-white font-bold underline underline-offset-4 decoration-2 hover:text-warm-100">
+          See them all on {reviews.platform} →
+        </a>
+      </p>
+    </div>
+
+    <!-- Review wall (masonry — handles short & long reviews gracefully) -->
+    <div class="columns-1 md:columns-2 lg:columns-3 gap-5 md:gap-6 [column-fill:_balance]">
+      {
+        testimonials.map((t) => (
+          <figure class="break-inside-avoid mb-5 md:mb-6 bg-white rounded-2xl p-6 shadow-xl shadow-black/30 hover:-translate-y-1 transition-transform duration-200">
+            <div class="flex items-center gap-0.5 mb-3" aria-label={`${t.rating} out of 5 stars`}>
+              {Array.from({ length: t.rating }).map(() => (
+                <svg class="w-4 h-4 text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.42 4.36a1 1 0 00.95.69h4.59c.97 0 1.37 1.24.59 1.81l-3.72 2.7a1 1 0 00-.36 1.12l1.42 4.36c.3.92-.76 1.69-1.54 1.12l-3.71-2.7a1 1 0 00-1.18 0l-3.71 2.7c-.78.57-1.84-.2-1.54-1.12l1.42-4.36a1 1 0 00-.36-1.12l-3.72-2.7c-.78-.57-.38-1.81.59-1.81h4.59a1 1 0 00.95-.69l1.42-4.36z" />
+                </svg>
+              ))}
+            </div>
+
+            <blockquote class="text-stone-700 leading-relaxed text-[15px] mb-5">
+              “{t.text}”
+            </blockquote>
+
+            <figcaption class="flex items-center justify-between gap-3 pt-4 border-t border-stone-200">
+              <div class="min-w-0">
+                <div class="font-heading font-bold text-stone-900 uppercase tracking-wide text-sm truncate">{t.name}</div>
+                <div class="text-stone-500 text-xs truncate">
+                  {t.project}{t.date ? ` · ${t.date}` : ''}
+                </div>
+              </div>
+              <span class="shrink-0 inline-flex items-center gap-1.5 text-stone-400 text-[11px] uppercase tracking-wider">
+                <svg class="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99C18.34 21.13 22 16.99 22 12z" />
+                </svg>
+                {t.source}
+              </span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <!-- CTA strip -->
+    <div class="text-center mt-12">
+      <a
+        href={CONFIG.cta.primary.href}
+        class="inline-flex items-center gap-2 bg-black hover:bg-stone-800 text-white px-8 py-4 text-sm font-bold tracking-[0.15em] uppercase no-underline shadow-xl shadow-black/40 ring-1 ring-white/20 transition-colors"
+      >
+        Join Our Happy Customers →
+      </a>
+      <p class="text-white/70 text-xs mt-4 uppercase tracking-widest">Free estimates · Same-week service</p>
+    </div>
+  </div>
+</section>

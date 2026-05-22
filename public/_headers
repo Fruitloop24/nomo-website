@@ -1,0 +1,2 @@
+/*
+  Content-Security-Policy: connect-src 'self' https://hetzner.cerul.org https://room-studio-worker.k-c-sheffield012376.workers.dev

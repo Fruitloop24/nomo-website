@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro'
+import { CONFIG } from '../config'
+---
+
+<Base
+  title="About"
+  description="Locally owned junk removal and dumpster rentals serving Middle Georgia. Less mess. Less stress.">
+  <!-- Pic leads -->
+  <section class="relative bg-black">
+    <img src="/photos/commercial-cleanout.jpg" alt="NoMo Junk on a job" class="w-full h-56 sm:h-72 md:h-96 object-cover" loading="eager" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20"></div>
+    <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+      <div>
+        <p class="text-accent-light text-xs font-bold tracking-[0.3em] uppercase mb-3 drop-shadow">About {CONFIG.appName}</p>
+        <h1 class="font-heading text-4xl md:text-6xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">Locally Owned. Locally Run.</h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slim band below -->
+  <section class="bg-accent py-6 md:py-8">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <p class="text-white text-base md:text-lg font-semibold leading-relaxed">
+        Family-owned junk removal &amp; dumpster rentals across {CONFIG.address.region}.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24 bg-stone-900 text-warm-100">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 grid md:grid-cols-5 gap-10 md:gap-12 items-start">
+      <figure class="md:col-span-2">
+        <div class="relative rounded-2xl overflow-hidden ring-2 ring-accent shadow-[0_20px_50px_-12px_rgba(30,111,255,0.6)]">
+          <img
+            src={CONFIG.images.colby}
+            alt="Colby Roland, owner of NoMo Junk"
+            class="w-full aspect-[4/5] object-cover"
+            loading="lazy"
+          />
+        </div>
+        <figcaption class="mt-3 text-center">
+          <span class="font-heading text-warm-100 font-bold uppercase tracking-wide">Colby Roland</span>
+          <span class="block text-accent-light text-xs uppercase tracking-[0.25em]">Owner · Operator</span>
+        </figcaption>
+      </figure>
+
+      <div class="md:col-span-3">
+        <div class="space-y-5 text-warm-200 text-base md:text-lg leading-relaxed border-l-2 border-accent pl-6">
+        <p>
+          {CONFIG.appName} is a family-run junk removal and dumpster rental outfit serving {CONFIG.address.region}.
+          We started because we saw too many people stuck with a garage full of stuff, a yard full of debris, or a remodel
+          job with nowhere to put the mess — and the existing options were either too expensive, too slow, or too rude.
+        </p>
+        <p>
+          So we built something different. Show up when we say we will. Quote a real price before we touch anything.
+          Treat your property like it's our own. Haul it off, leave the spot cleaner than we found it. That's the whole job.
+        </p>
+        <p>
+          Whether you need one couch gone today or a roll-off dumpster on the driveway for a week, we've got you covered.
+          Pick up the phone — {CONFIG.phone.display} — or book online and we'll get a time on the calendar.
+        </p>
+        </div>
+
+        <div class="mt-10 flex flex-col sm:flex-row gap-4">
+          <a href={CONFIG.booking} class="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white px-8 py-4 text-sm font-bold tracking-[0.15em] uppercase no-underline transition-colors">
+            Book a Pickup
+          </a>
+          <a href={CONFIG.phone.href} class="inline-flex items-center justify-center gap-2 border-2 border-warm-100 text-warm-100 hover:bg-warm-100 hover:text-black px-8 py-4 text-sm font-bold tracking-[0.15em] uppercase no-underline transition-colors">
+            Call {CONFIG.phone.display}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

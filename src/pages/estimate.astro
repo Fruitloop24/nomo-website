@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro'
+import Estimator from '../components/Estimator'
+---
+
+<Base
+  title="Free Estimator"
+  description="Get a ballpark price for junk removal or a dumpster rental in 30 seconds. Pick your load size, add heavy items, see the range.">
+  <!-- Pic leads -->
+  <section class="relative bg-black">
+    <img src="/photos/impossible-cleanout.jpg" alt="A big junk cleanout job" class="w-full h-56 sm:h-72 md:h-96 object-cover" loading="eager" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20"></div>
+    <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+      <div>
+        <p class="text-accent-light text-xs font-bold tracking-[0.3em] uppercase mb-3 drop-shadow">Ballpark Estimator</p>
+        <h1 class="font-heading text-4xl md:text-6xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+          How Much Will It Cost?
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slim band below -->
+  <section class="bg-accent py-6 md:py-8">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <p class="text-white text-base md:text-lg font-semibold leading-relaxed">
+        Pick what you've got — we'll show you a range. We can usually beat it.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-10 md:py-14 bg-stone-900">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <Estimator client:load />
+    </div>
+  </section>
+</Base>

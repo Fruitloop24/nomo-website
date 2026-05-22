@@ -1,0 +1,51 @@
+---
+import { CONFIG } from '../config'
+
+const email = CONFIG.cta.email.href.replace(/^mailto:/, '')
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MovingCompany', // schema.org's closest type for junk removal
+  name: CONFIG.appName,
+  image: new URL('/logo.jpg', Astro.site).toString(),
+  telephone: CONFIG.phone.display,
+  email,
+  url: Astro.site?.toString(),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: CONFIG.address.street,
+    addressLocality: CONFIG.address.city,
+    addressRegion: CONFIG.address.state,
+    postalCode: CONFIG.address.zip,
+    addressCountry: 'US',
+  },
+  areaServed: CONFIG.areasServed.map((name) => ({ '@type': 'City', name: `${name}, ${CONFIG.address.state}` })),
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      opens: '07:00',
+      closes: '19:00',
+    },
+  ],
+  priceRange: '$$',
+  description: CONFIG.hero.subheadline,
+  foundingDate: String(CONFIG.yearStarted),
+  sameAs: CONFIG.socials.map((s) => s.href),
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: String(CONFIG.reviews.rating),
+    reviewCount: String(CONFIG.reviews.count),
+    bestRating: '5',
+    worstRating: '1',
+  },
+  review: CONFIG.testimonials.map((t) => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: t.name },
+    reviewRating: { '@type': 'Rating', ratingValue: String(t.rating), bestRating: '5' },
+    reviewBody: t.text,
+  })),
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

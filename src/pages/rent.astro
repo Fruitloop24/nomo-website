@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro'
+import DumpsterReserve from '../components/DumpsterReserve'
+import { CONFIG } from '../config'
+
+const r = CONFIG.rental
+---
+
+<Base
+  title="Rent a Dumpster"
+  description="Roll-off dumpster rental in Middle Georgia. Two days and your first ton included — keep it longer for $100/day. Pick a date and reserve online.">
+  <!-- Pic up top -->
+  <section class="relative bg-black">
+    <img
+      src={CONFIG.images.dumpster}
+      alt="NoMo Junk roll-off dumpster trailer"
+      width="1600" height="1400"
+      class="w-full h-64 sm:h-80 md:h-[420px] object-cover"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20"></div>
+    <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+      <div>
+        <p class="text-accent-light text-xs font-bold tracking-[0.3em] uppercase mb-3 drop-shadow">Roll-Off Rentals</p>
+        <h1 class="font-heading text-4xl md:text-6xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+          Reserve a Dumpster
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slim blue band — the two-sentence explainer -->
+  <section class="bg-accent py-6 md:py-8">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <p class="text-white text-base md:text-lg font-semibold leading-relaxed">
+        Your rental covers drop-off day plus one more — {r.includedDays} days and your first ton, with delivery and pickup included.
+        Need it longer? It's just {`$${r.perExtraDay}`} a day, and we handle the rest.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-12 md:py-16 bg-stone-900">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid lg:grid-cols-5 gap-8 lg:gap-10 items-start">
+      <!-- Dumpster spec card -->
+      <aside class="lg:col-span-2 bg-stone-800 rounded-2xl ring-1 ring-white/10 shadow-xl shadow-black/40 p-6 md:p-7">
+        <p class="text-accent-light text-xs tracking-[0.25em] uppercase font-bold mb-2">One Size, Does It All</p>
+        <h2 class="font-heading text-2xl font-bold text-white mb-1">{r.name}</h2>
+        <p class="text-warm-300 text-sm mb-5">{r.capacity} · {r.dims}</p>
+
+        <div class="bg-stone-900 rounded-xl p-4 mb-5">
+          <div class="flex items-baseline gap-2">
+            <span class="font-heading text-4xl font-bold text-accent">{`$${r.basePrice}`}</span>
+            <span class="text-warm-400 text-sm">to start</span>
+          </div>
+          <p class="text-warm-300 text-xs mt-1">{r.includedDays} days + first {r.includedTons} ton, delivery &amp; pickup included · {`+$${r.perExtraDay}`}/extra day</p>
+        </div>
+
+        <ul class="space-y-2 mb-5">
+          {r.bestFor.map((b) => (
+            <li class="flex items-start gap-2 text-warm-200 text-sm">
+              <svg class="w-4 h-4 text-accent-light mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0l-3.5-3.5a1 1 0 011.4-1.4l2.8 2.79 6.8-6.79a1 1 0 011.4 0z" clip-rule="evenodd" />
+              </svg>
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+
+        <p class="text-warm-400 text-xs leading-relaxed border-t border-stone-700 pt-4">
+          <span class="text-warm-200 font-semibold">Can't go in the box:</span> {r.prohibited.join(', ')}. Heavier than a ton? We'll square up the difference — no surprises.
+        </p>
+      </aside>
+
+      <!-- Reservation flow (mirrors booking, ends in Stripe checkout) -->
+      <div class="lg:col-span-3">
+        <DumpsterReserve client:load />
+      </div>
+    </div>
+  </section>
+</Base>
