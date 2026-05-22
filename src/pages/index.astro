@@ -3,7 +3,16 @@ import Base from '../layouts/Base.astro'
 import FAQ from '../components/FAQ.astro'
 import Testimonials from '../components/Testimonials.astro'
 import BeforeAfterCarousel from '../components/BeforeAfterCarousel.astro'
+import QRCode from 'qrcode'
 import { CONFIG } from '../config'
+
+// Scan → opens the site, installable as a PWA (Add to Home Screen).
+const qrSvg = await QRCode.toString('https://nomo-website.pages.dev/', {
+  type: 'svg',
+  color: { dark: '#0a0a0a', light: '#ffffff' },
+  margin: 0,
+  width: 200,
+})
 
 const workCategories = CONFIG.images.workCategories
 const rental = CONFIG.rental
@@ -189,6 +198,49 @@ const rental = CONFIG.rental
 
   <!-- ════════════ 7. FAQ ════════════ -->
   <FAQ />
+
+  <!-- ════════════ 7b. GET THE APP (PWA install) ════════════ -->
+  <section class="py-16 md:py-20 bg-stone-900 border-y border-stone-800">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-black rounded-2xl border border-stone-800 p-8 md:p-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <div>
+            <p class="text-accent text-sm font-semibold tracking-widest uppercase mb-2">Get the App</p>
+            <h2 class="font-heading text-2xl md:text-3xl font-bold text-warm-100 mb-4">Take Us With You</h2>
+            <p class="text-warm-300 leading-relaxed mb-6">
+              Put NoMo Junk on your phone — the estimator, dumpster rental, and one-tap calling right on your home screen. Scan the QR code or follow the steps below to install.
+            </p>
+            <div class="space-y-3">
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 bg-accent text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span>
+                <p class="text-warm-300 text-sm">
+                  <strong class="text-warm-100">iPhone:</strong> Tap the share button (box with arrow) in Safari, then tap <strong>"Add to Home Screen."</strong>
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 bg-accent text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span>
+                <p class="text-warm-300 text-sm">
+                  <strong class="text-warm-100">Android:</strong> Tap the menu (three dots) in Chrome, then tap <strong>"Add to Home Screen"</strong> or <strong>"Install App."</strong>
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="w-7 h-7 bg-accent text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</span>
+                <p class="text-warm-300 text-sm">
+                  <strong class="text-warm-100">That's it!</strong> It's an app — right on your home screen, always up to date.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="bg-white rounded-2xl p-6 shadow-md">
+              <div set:html={qrSvg} style="width: 200px; height: 200px;" />
+            </div>
+            <p class="text-warm-400 text-xs mt-3 text-center">Scan with your phone camera to open the site</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ════════════ 7. FINAL CTA ════════════ -->
   <section class="py-16 md:py-20 bg-accent text-white text-center">

@@ -13,12 +13,14 @@
     "@astrojs/preact": "^4.0.10",
     "@astrojs/sitemap": "^3.7.1",
     "@tailwindcss/vite": "^4.2.2",
+    "@types/qrcode": "^1.5.6",
     "@vite-pwa/astro": "^1.1.2",
     "astro": "^6.1.8",
     "astro-compress": "^2.4.1",
     "astro-icon": "^1.1.5",
     "astro-seo": "^1.1.0",
     "preact": "^10.26.9",
+    "qrcode": "^1.5.4",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
