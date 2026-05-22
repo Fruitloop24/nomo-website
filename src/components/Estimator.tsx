@@ -5,6 +5,7 @@ const LOAD_SIZES = CONFIG.pricing.loadSizes
 const ADD_ONS = CONFIG.pricing.addOns
 const CONDITIONS = CONFIG.pricing.conditions
 const DUMPSTERS = CONFIG.dumpsters
+const PER_EXTRA_DAY = CONFIG.rental.perExtraDay // $100/day past the included days
 
 const fmt = (n: number) =>
   n.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })
@@ -19,6 +20,7 @@ export default function Estimator() {
 
   // Dumpster state
   const [dumpsterId, setDumpsterId] = useState(DUMPSTERS[1]?.id ?? DUMPSTERS[0].id)
+  const [extraDays, setExtraDays] = useState(0)
 
   const setAddOn = (id: string, v: number) => setAddOnCounts({ ...addOnCounts, [id]: v })
   const setCondition = (id: string, v: boolean) => setConditionFlags({ ...conditionFlags, [id]: v })
@@ -39,8 +41,10 @@ export default function Estimator() {
   // ─── Dumpster totals ────────────────────────────────────────────────────
   const dumpster = useMemo(() => {
     const d = DUMPSTERS.find((x) => x.id === dumpsterId) ?? DUMPSTERS[0]
-    return { d, low: d.price, high: d.price }
-  }, [dumpsterId])
+    const extraTotal = extraDays * PER_EXTRA_DAY
+    const total = d.price + extraTotal
+    return { d, extraDays, extraTotal, totalDays: d.days + extraDays, low: total, high: total }
+  }, [dumpsterId, extraDays])
 
   const current = mode === 'haul' ? haul : dumpster
 
@@ -199,6 +203,20 @@ export default function Estimator() {
                   </label>
                 ))}
               </div>
+
+              {/* Extra days — $100/day past the included rental */}
+              <div class="mt-5 pt-5 border-t border-white/15">
+                <h2 class="font-heading text-sm font-bold text-warm-100 uppercase tracking-wider mb-3">
+                  Keep It Longer?
+                </h2>
+                <NumInput
+                  label="Extra days"
+                  sub={`${dumpster.d.days} days included · +$${PER_EXTRA_DAY} each`}
+                  value={extraDays}
+                  onChange={setExtraDays}
+                  max={30}
+                />
+              </div>
             </div>
           )}
         </div>
@@ -221,7 +239,7 @@ export default function Estimator() {
                   )}
                 </div>
                 <div class="text-white/70 text-xs mt-1">
-                  {mode === 'haul' ? haul.size.label : `${dumpster.d.name} · ${dumpster.d.days} days`}
+                  {mode === 'haul' ? haul.size.label : `${dumpster.d.name} · ${dumpster.totalDays} days`}
                 </div>
               </div>
             </div>
@@ -263,9 +281,15 @@ export default function Estimator() {
                       <span class="text-warm-300">Drop-off + pickup</span>
                       <span class="font-bold text-warm-100">Included</span>
                     </div>
+                    {dumpster.extraDays > 0 && (
+                      <div class="flex justify-between">
+                        <span class="text-warm-300">+{dumpster.extraDays} extra day{dumpster.extraDays > 1 ? 's' : ''} @ ${PER_EXTRA_DAY}</span>
+                        <span class="font-bold text-warm-100">+${fmt(dumpster.extraTotal)}</span>
+                      </div>
+                    )}
                     <div class="flex justify-between pt-2 border-t border-stone-700">
                       <span class="font-bold text-warm-100">Total</span>
-                      <span class="font-bold text-accent">${fmt(dumpster.d.price)}</span>
+                      <span class="font-bold text-accent">${fmt(dumpster.low)}</span>
                     </div>
                   </>
                 )}
