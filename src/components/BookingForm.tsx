@@ -317,7 +317,7 @@ export default function BookingForm() {
         <label for="name" class="block text-sm font-semibold text-stone-700 mb-1.5">Your name <span class="text-accent">*</span></label>
         <input
           id="name" type="text" required value={info.name} onInput={update('name')}
-          class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white"
+          class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white"
         />
       </div>
 
@@ -327,7 +327,7 @@ export default function BookingForm() {
           <input
             id="phone" type="tel" required value={info.phone} onInput={update('phone')}
             placeholder="(000) 000-0000"
-            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white"
+            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white"
           />
         </div>
         <div>
@@ -335,7 +335,7 @@ export default function BookingForm() {
           <input
             id="email" type="email" required value={info.email} onInput={update('email')}
             placeholder="you@example.com"
-            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white"
+            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white"
           />
         </div>
       </div>
@@ -345,7 +345,7 @@ export default function BookingForm() {
         <input
           id="address" type="text" required value={info.address} onInput={update('address')}
           placeholder="123 Main St, Macon, GA"
-          class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white"
+          class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white"
         />
       </div>
 
@@ -355,7 +355,7 @@ export default function BookingForm() {
           <input
             id="date" type="date" required value={info.preferredDate} onInput={update('preferredDate')}
             min={todayISO()}
-            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white"
+            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white"
           />
           <p class="text-xs text-stone-500 mt-1">We book {API.hoursLabel}</p>
         </div>
@@ -382,7 +382,7 @@ export default function BookingForm() {
         <textarea
           id="message" rows={3} value={info.message} onInput={update('message')}
           placeholder="Garage cleanout — about a truck load of old furniture, paint cans, yard junk."
-          class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white resize-none"
+          class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white resize-none"
         />
       </div>
 

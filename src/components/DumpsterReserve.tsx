@@ -282,38 +282,38 @@ export default function DumpsterReserve() {
       <div>
         <label for="name" class="block text-sm font-semibold text-stone-700 mb-1.5">Your name <span class="text-accent">*</span></label>
         <input id="name" type="text" required value={info.name} onInput={update('name')}
-          class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
+          class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label for="phone" class="block text-sm font-semibold text-stone-700 mb-1.5">Phone <span class="text-accent">*</span></label>
           <input id="phone" type="tel" required value={info.phone} onInput={update('phone')} placeholder="(000) 000-0000"
-            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
+            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
         </div>
         <div>
           <label for="email" class="block text-sm font-semibold text-stone-700 mb-1.5">Email <span class="text-accent">*</span></label>
           <input id="email" type="email" required value={info.email} onInput={update('email')} placeholder="you@example.com"
-            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
+            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
         </div>
       </div>
 
       <div>
         <label for="address" class="block text-sm font-semibold text-stone-700 mb-1.5">Drop-off address <span class="text-accent">*</span></label>
         <input id="address" type="text" required value={info.address} onInput={update('address')} placeholder="123 Main St, Macon, GA"
-          class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
+          class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label for="dropoff" class="block text-sm font-semibold text-stone-700 mb-1.5">Drop-off date <span class="text-accent">*</span></label>
           <input id="dropoff" type="date" required value={info.dropOff} onInput={setDropOff} min={todayISO()}
-            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
+            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
         </div>
         <div>
           <label for="pickup" class="block text-sm font-semibold text-stone-700 mb-1.5">Pick-up date <span class="text-accent">*</span></label>
           <input id="pickup" type="date" required value={info.pickUp} onInput={update('pickUp')} min={info.dropOff ? addDays(info.dropOff, MIN_DAYS) : todayISO()}
-            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
+            class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
           <p class="text-xs text-stone-500 mt-1">{MIN_DAYS}-day minimum.</p>
         </div>
       </div>
