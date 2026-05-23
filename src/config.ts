@@ -36,7 +36,7 @@ export const CONFIG = {
   },
 
   // ─── CONTACT ───
-  website: 'nomojunkga.com',
+  website: 'nomo-website.pages.dev',
   phone: {
     raw: '4782859915',
     display: '(478) 285-9915',
@@ -75,7 +75,7 @@ export const CONFIG = {
   bookingApi: {
     // Same backend the flooring site uses — just a different source_site tag.
     base: 'https://hetzner.cerul.org',
-    sourceSite: 'nomojunkga.com',
+    sourceSite: 'nomo-website.pages.dev',
     hoursLabel: 'Mon – Sat · 7 AM – 7 PM',
     requestPath: '/public/book/request',
     confirmPath: '/public/book/confirm',

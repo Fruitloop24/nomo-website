@@ -6,7 +6,7 @@ import compress from 'astro-compress'
 import tailwindcss from '@tailwindcss/vite'
 import AstroPWA from '@vite-pwa/astro'
 
-const SITE = 'https://nomojunkga.com'
+const SITE = 'https://nomo-website.pages.dev'
 
 export default defineConfig({
   site: SITE,
