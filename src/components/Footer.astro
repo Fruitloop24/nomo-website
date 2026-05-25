@@ -14,9 +14,6 @@ const year = new Date().getFullYear()
           class="h-16 w-auto object-contain mb-5"
           loading="lazy"
         />
-        <p class="text-warm-300 text-sm leading-relaxed max-w-xs mb-5">
-          {CONFIG.footer.tagline}
-        </p>
         {
           CONFIG.socials.map((s) => (
             <a
@@ -24,15 +21,18 @@ const year = new Date().getFullYear()
               target="_blank"
               rel="noopener"
               aria-label={`NoMo Junk on ${s.name}`}
-              class="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white px-4 py-2 rounded-lg text-sm font-semibold no-underline transition-colors"
+              class="inline-flex items-center gap-2.5 bg-accent hover:bg-accent-dark text-white px-5 py-3 rounded-xl text-base font-bold no-underline transition-colors mb-5"
             >
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99C18.34 21.13 22 16.99 22 12z" />
               </svg>
               Follow us on {s.name}
             </a>
           ))
         }
+        <p class="text-warm-300 text-sm leading-relaxed max-w-xs">
+          {CONFIG.footer.tagline}
+        </p>
       </div>
 
       <div>

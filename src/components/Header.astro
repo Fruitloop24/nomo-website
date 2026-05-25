@@ -34,13 +34,28 @@ const fbHref = CONFIG.socials.find((s) => s.name === 'Facebook')?.href ?? CONFIG
         </span>
       </a>
 
-      <a
-        href={CONFIG.booking}
-        class="shrink-0 inline-flex items-center gap-1.5 bg-black hover:bg-stone-800 text-white px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-heading font-bold tracking-wider uppercase transition-colors no-underline ring-1 ring-white/20"
-      >
-        <span class="hidden sm:inline">Book Now</span>
-        <span class="sm:hidden">Book</span>
-      </a>
+      <div class="shrink-0 flex items-center gap-2 sm:gap-3">
+        {fbHref && (
+          <a
+            href={fbHref}
+            target="_blank"
+            rel="noopener"
+            aria-label="NoMo Junk on Facebook"
+            class="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 bg-black hover:bg-stone-800 text-white rounded-lg ring-1 ring-white/20 transition-colors no-underline"
+          >
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99C18.34 21.13 22 16.99 22 12z" />
+            </svg>
+          </a>
+        )}
+        <a
+          href={CONFIG.booking}
+          class="inline-flex items-center gap-1.5 bg-black hover:bg-stone-800 text-white px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-heading font-bold tracking-wider uppercase transition-colors no-underline ring-1 ring-white/20"
+        >
+          <span class="hidden sm:inline">Book Now</span>
+          <span class="sm:hidden">Book</span>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -65,15 +80,6 @@ const fbHref = CONFIG.socials.find((s) => s.name === 'Facebook')?.href ?? CONFIG
             </li>
           ))
         }
-        {fbHref && (
-          <li>
-            <a href={fbHref} target="_blank" rel="noopener" aria-label="NoMo Junk on Facebook" class="flex items-center text-warm-300 hover:text-accent-light transition-colors no-underline py-2">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99C18.34 21.13 22 16.99 22 12z" />
-              </svg>
-            </a>
-          </li>
-        )}
       </ul>
     </div>
   </nav>
