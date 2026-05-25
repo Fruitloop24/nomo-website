@@ -6,7 +6,7 @@ const API = CONFIG.bookingApi
 const AVAILABILITY_URL = `${API.base}${API.reserveAvailabilityPath}`
 const CHECKOUT_URL = `${API.base}${API.reserveCheckoutPath}`
 
-// Cerul enforces a 2-day minimum; we default the pick-up to drop + 2.
+// Cerul enforces a 2-day minimum (inclusive of drop + pick-up day).
 const MIN_DAYS = 2
 
 type Step = 'info' | 'dates' | 'handoff' | 'redirecting'
@@ -35,7 +35,8 @@ function addDays(dateStr: string, n: number): string {
   d.setDate(d.getDate() + n)
   return iso(d)
 }
-// Whole calendar days in the span. Cerul's contract: pickup_date = drop_date + rental_days.
+// Whole calendar days between two dates. Inclusive rental: a customer who picks
+// drop 25 → pick-up 29 keeps the can 25,26,27,28,29 = daysBetween + 1 = 5 days.
 function daysBetween(a: string, b: string): number {
   if (!a || !b) return 0
   const ms = new Date(b + 'T00:00:00').getTime() - new Date(a + 'T00:00:00').getTime()
@@ -59,14 +60,17 @@ export default function DumpsterReserve() {
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
 
-  const rentalDays = daysBetween(info.dropOff, info.pickUp)
+  // Inclusive: pick-up = LAST day they keep the can, so the rental spans
+  // drop..pickUp inclusive. Cerul books drop → pickup+1 internally.
+  const rentalDays = info.dropOff && info.pickUp ? daysBetween(info.dropOff, info.pickUp) + 1 : 0
   const extraDays = Math.max(0, rentalDays - RENTAL.includedDays)
   const est = estimate(Math.max(rentalDays, MIN_DAYS))
 
-  // Picking a drop-off date defaults the pick-up to drop + 2 (the minimum).
+  // Picking a drop-off date defaults the pick-up to the minimum rental
+  // (inclusive: MIN_DAYS possession days = pick-up on drop + MIN_DAYS - 1).
   function setDropOff(e: Event) {
     const dropOff = (e.target as HTMLInputElement).value
-    const minPick = addDays(dropOff, MIN_DAYS)
+    const minPick = addDays(dropOff, MIN_DAYS - 1)
     const pickUp = !info.pickUp || info.pickUp < minPick ? minPick : info.pickUp
     setInfo({ ...info, dropOff, pickUp })
   }
@@ -110,7 +114,7 @@ export default function DumpsterReserve() {
     if (!info.email.trim()) return setError('Please enter an email for your receipt.')
     if (!info.address.trim()) return setError('Please enter the drop-off address.')
     if (!info.dropOff) return setError('Please pick a drop-off date.')
-    if (rentalDays < MIN_DAYS) return setError(`Pick-up must be at least ${MIN_DAYS} days after drop-off.`)
+    if (rentalDays < MIN_DAYS) return setError(`Minimum rental is ${MIN_DAYS} days — pick a later pick-up date.`)
 
     setLoading(true)
     setExcludeDates([])
@@ -157,7 +161,7 @@ export default function DumpsterReserve() {
         body: JSON.stringify({
           source_site: API.sourceSite,
           drop_date: d.drop_date,
-          rental_days: daysBetween(d.drop_date, d.pickup_date),
+          rental_days: daysBetween(d.drop_date, d.pickup_date) + 1,
           drop_address: info.address,
           name: info.name,
           phone: info.phone,
@@ -312,7 +316,7 @@ export default function DumpsterReserve() {
         </div>
         <div>
           <label for="pickup" class="block text-sm font-semibold text-stone-700 mb-1.5">Pick-up date <span class="text-accent">*</span></label>
-          <input id="pickup" type="date" required value={info.pickUp} onInput={update('pickUp')} min={info.dropOff ? addDays(info.dropOff, MIN_DAYS) : todayISO()}
+          <input id="pickup" type="date" required value={info.pickUp} onInput={update('pickUp')} min={info.dropOff ? addDays(info.dropOff, MIN_DAYS - 1) : todayISO()}
             class="w-full px-4 py-2.5 border border-warm-200 rounded-lg text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent bg-white" />
           <p class="text-xs text-stone-500 mt-1">{MIN_DAYS}-day minimum.</p>
         </div>

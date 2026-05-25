@@ -14,7 +14,7 @@ blue** to match the logo. Shares the booking backend (`hetzner.cerul.org`), tagg
 
 ---
 
-## Status — 2026-05-20
+## Status — 2026-05-24
 
 **Done & verified in-browser:**
 - Astro 6 + Tailwind 4 + Preact islands. Bold **blue-on-black** theme; sections alternate solid
@@ -50,8 +50,12 @@ One dumpster size, a **fleet of 3 identical units (A/B/C)** rented **by date**. 
   "+ tax · final at checkout" so it can't be mistaken for the total.
 - **Flow** (`DumpsterReserve.tsx`, mirrors the junk booking flow):
   1. Island collects name / phone / email / **drop-off address** / drop-off date / pick-up date.
-     `rental_days` is derived from the span (whole calendar days, **2-day minimum**; pick-up
-     defaults to drop + 2). Form state is held client-side and resent — no server-side lead.
+     **Pick-up = the last day the customer keeps the can (inclusive), not the return day** — so
+     `rental_days = daysBetween(drop, pickUp) + 1`. Drop 25 → pick-up 29 keeps it 25-29 = **5
+     days**. **2-day minimum** (drop + the next day); pick-up defaults to drop + 1. Cerul books the
+     span as `drop → pickup + 1` internally, so the on-page day count matches what the customer
+     intuitively "has the dumpster for." Form state is held client-side and resent — no server-side
+     lead.
   2. `POST {base}/public/reserve/availability` `{ source_site, preferred_drop_date, rental_days,
      exclude_dates }` → up to 3 open `{ drop_date, pickup_date, display_label }` spans, or
      `{ handoff: true, handoff_message, phone }`.
