@@ -3,11 +3,17 @@
 Marketing site + booking + estimator + dumpster-reservation funnel for **NoMo Junk**
 (Middle Georgia — junk removal & roll-off dumpster rentals).
 
+> **Demo / template.** This is the store+service **TEMPLATE/demo** (store + reservations +
+> payments, forkable like `all-thing`) — the "NoMo Junk" branding, contact details, photos, and
+> reviews are demo content, not a live client deploy. Config is pointed at the
+> `nomo-website.pages.dev` demo domain. To fork for a real client, repoint the domain/`source_site`
+> and rebrand.
+
 Cloned from the `flooring-gallery` Astro template, AI stripped out, recolored **black + electric
 blue** to match the logo. Shares the booking backend (`hetzner.cerul.org`), tagged
-`source_site: 'nomojunkga.com'`.
+`source_site: 'nomo-website.pages.dev'`.
 
-- **Domain:** nomojunkga.com
+- **Domain:** nomo-website.pages.dev (demo)
 - **Facebook:** <https://www.facebook.com/NoMoJunkMiddleGa>
 - **Phone:** (478) 285-9915 · **Email:** nomojunk89@gmail.com
 - **Address:** 724 5th Ave, Eastman, GA 31023
@@ -67,7 +73,7 @@ One dumpster size, a **fleet of 3 identical units (A/B/C)** rented **by date**. 
   5. "None of these work" twice → handoff screen with the phone number (same as booking).
 
 > Endpoint paths live in `CONFIG.bookingApi` (`reserveAvailabilityPath` / `reserveCheckoutPath`).
-> `source_site` = `nomojunkga.com`. Build is clean; island hydrates with no console errors.
+> `source_site` = `nomo-website.pages.dev`. Build is clean; island hydrates with no console errors.
 
 ---
 
@@ -79,10 +85,11 @@ The two endpoints (`/public/reserve/availability`, `/public/reserve/checkout`) a
 session, holds the Stripe secret in its `cerul-sct` vault, and creates the `source='reserve'`
 calendar event + paid (taxed) invoice on the webhook. **Our front end is done to that contract.**
 What Cerul still needs from us / KC:
-- **CORS allowlist:** add our origins → `https://nomojunkga.com`, `https://www.nomojunkga.com`,
-  the Cloudflare Pages preview suffix (`*.<project>.pages.dev` once the Pages project exists), and
-  `http://localhost:4321` for dev. Until then the calls are blocked.
-- **`source_site` mapping:** map `nomojunkga.com` → the dumpster tenant + its `store_reserve`
+- **CORS allowlist:** add our origins → `https://nomo-website.pages.dev`,
+  the Cloudflare Pages preview suffix (`*.<project>.pages.dev`), and
+  `http://localhost:4321` for dev (plus the real domain once forked to a client). Until then the
+  calls are blocked.
+- **`source_site` mapping:** map `nomo-website.pages.dev` → the dumpster tenant + its `store_reserve`
   config block (inventory A/B/C, pricing, `tax_rate`, handoff name/phone).
 - **Reminders:** Cerul's existing 24h/1h customer-email cron fires for any event with a
   `customer_email`, so dumpster reminders come along for free once the webhook writes the event —
@@ -90,9 +97,9 @@ What Cerul still needs from us / KC:
 
 ### 2. Test the booking flow end-to-end
 Confirm `/book` actually talks to `hetzner.cerul.org/public/book/{request,confirm}` for
-`source_site: 'nomojunkga.com'` — returns real slots, books one, and the handoff fires after
-6 excluded slots. Make sure Hetzner **recognizes `nomojunkga.com`** and routes notifications to
-the right operator.
+`source_site: 'nomo-website.pages.dev'` — returns real slots, books one, and the handoff fires
+after 6 excluded slots. Make sure Hetzner **recognizes `nomo-website.pages.dev`** and routes
+notifications to the right operator.
 
 ### 3. Confirm pricing with Colby
 `CONFIG.rental`: `basePrice` 425 · `includedDays` 2 · `includedTons` 1 · `perExtraDay` 100.
@@ -104,8 +111,8 @@ Service worker is **deliberately disabled** right now (it was serving stale buil
 on: restore `registerSW()` in `src/pwa.ts` and remove `selfDestroying: true` in `astro.config.ts`.
 
 ### 5. Deploy
-`astro build` → static `dist/` → Cloudflare Pages on **nomojunkga.com**. Update `SITE` in
-`astro.config.ts` if the domain changes.
+`astro build` → static `dist/` → Cloudflare Pages on **nomo-website.pages.dev** (demo). Update
+`SITE` in `astro.config.ts` if the domain changes (e.g. forking to a real client).
 
 ### 6. Optional polish
 More before/after pairs or reviews drop straight into `CONFIG.images.beforeAfters` /
@@ -140,7 +147,7 @@ src/
     Testimonials.astro            # blue section, white review cards (CONFIG.testimonials)
     BeforeAfterCarousel.astro     # auto-rotating (3s) before|after carousel with dots
     BookingForm.tsx               # Preact island — 2-step junk booking → hetzner /public/book/*
-    DumpsterReserve.tsx           # Preact island — dumpster reservation → /public/rent/* → Stripe
+    DumpsterReserve.tsx           # Preact island — dumpster reservation → /public/reserve/* → Stripe
     Estimator.tsx                 # Preact island — junk haul + dumpster (single 7×16×4) tabs
   pages/
     index.astro                   # Home: hero → what-we-do tiles → estimate → dumpster → carousel → reviews → FAQ → CTA
@@ -153,7 +160,7 @@ src/
 public/
   logo.jpg, favicon.svg
   photos/                         # dumpster-main, colby-profile, before/after pairs, category tiles
-astro.config.ts                   # site=nomojunkga.com; preact, sitemap, astro-icon, AstroPWA(selfDestroying), compress, tailwind
+astro.config.ts                   # site=nomo-website.pages.dev; preact, sitemap, astro-icon, AstroPWA(selfDestroying), compress, tailwind
 ```
 
 ---
@@ -167,7 +174,7 @@ astro.config.ts                   # site=nomojunkga.com; preact, sitemap, astro-
 - **Interactivity = islands only.** Three Preact islands: `BookingForm`, `DumpsterReserve`,
   `Estimator`. Everything else is static Astro + one vanilla `<script>` for the carousel.
 - **Shared backend.** `hetzner.cerul.org` handles both junk booking (`/public/book/*`) and
-  dumpster reservation (`/public/rent/*`), distinguished by the `source_site` field.
+  dumpster reservation (`/public/reserve/*`), distinguished by the `source_site` field.
 - **Schema.** `MovingCompany` JSON-LD + real `AggregateRating` (5.0, 25) and `Review` entries →
   eligible for ⭐ rich snippets in Google.
 - **`legacy-peer-deps=true` in `.npmrc`.** `@vite-pwa/astro@1.2.0` declares peer `astro@^5` but
